@@ -9,9 +9,7 @@ a {
     text-decoration: none;
 }
 
-body {
-    background: #000;
-}
+body {}
 
 /* conmmon */
 .clearfix::after {
@@ -22,13 +20,21 @@ body {
 
 /* header  */
 .topNavBar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
     padding-top: 27px;
     color: gray;
 }
 
-.topNavBar>a {
+.topNavBar .inner {
+    padding: 0 10px;
+}
+
+.topNavBar a {
     float: left;
-    margin-left: 14px;
+    margin-left: 4px;
     padding: 7px;
     font-size: 24px;
     font-family: "Arial";
@@ -36,16 +42,16 @@ body {
     color: inherit;
 }
 
-.topNavBar>a>span {
+.topNavBar a>span {
     color: #E8676B;
     margin-right: 4px;
 }
 
-.topNavBar>nav {
+.topNavBar nav {
     float: right;
 }
 
-.topNavBar>nav>a {
+.topNavBar nav>a {
     padding: 10px 0;
     margin-left: 21px;
     display: inline-block;
@@ -56,6 +62,106 @@ body {
     font-weight: bold;
 }
 
-.topNavBar>nav>a:hover {
+.topNavBar nav>a:hover {
     border-bottom-color: red;
+}
+
+.banner {
+    height: 515px;
+    background: url('../images/banner.jpg') center center;
+    background-size: cover;
+}
+
+.banner .mask {
+    height: 100%;
+    background: rgba(33, 37, 44, 0.8);
+}
+
+main {
+    max-width: 930px;
+    border: 5px solid #321;
+    margin: 0 auto;
+}
+
+main .card {
+    padding: 58px 50px;
+}
+
+main .card .picture,
+main .card .intro {
+    float: left;
+}
+
+main .card .intro {
+    width: 470px;
+    margin-left: 64px;
+}
+
+main .card .intro .profile .welcome {
+    position: relative;
+    padding: 7px 12px;
+    display: inline-block;
+    background: #E8676B;
+    color: white;
+    font-size: 14px;
+    line-height: 30px;
+    font-weight: bold;
+}
+
+div.triangle {
+    position: absolute;
+    top: 100%;
+    left: 2px;
+    border: 10px solid transparent;
+    width: 0px;
+    border-left-color: #E8676B;
+    border-top-width: 0px;
+}
+
+main .card .intro .profile h1 {
+    margin: 20px 0 10px 0;
+}
+
+hr {
+    margin-top: 20px;
+}
+
+main .card .intro .profile dl dt,
+main .card .intro .profile dl dd {
+    float: left;
+    margin-top: 20px;
+}
+
+main .card .intro .profile dl dt {
+    width: 30%;
+}
+
+main .card .intro .profile dl dd {
+    width: 70%;
+}
+
+main footer.media {
+    text-align: center;
+
+    background: #E8676B;
+}
+
+main footer.media>a {
+    display: inline-block;
+    width: 35px;
+    margin: 20px 13px;
+    padding: 5px 0;
+    line-height: 25px;
+    border-radius: 50%;
+}
+
+main footer.media>a:hover {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.media svg {
+    width: 25px;
+    height: 25px;
+    fill: white;
+    vertical-align: top;
 }

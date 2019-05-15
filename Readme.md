@@ -108,3 +108,62 @@ css2 2.1---css3   css 3 开始都是模块化升级  而不是整个css一起更
 
 
 
+-----------------
+
+### css  -2 
+
+​	元素的高度由什么决定： 
+
+​	1 块级元素高度 一般由其内部文档流元素的高度总和决定
+
+​		文档流是： 文档内元素的流动方向 ：  内联元素 左到右 块级元素 上到下
+
+ 2. 内联元素高度 建议行高。
+
+    ​	内联元素：中文理解 一个字是一个字 ；而英文是 一个单词时一个字 
+
+     			所以一长串无间隔的字母不会换行。可以由css属性 word-break打断 粉碎性骨折：break-all
+
+    ​		 能打断单词的字母让其换行显示
+
+    ｄ：ｉｂ　快捷键　display:inline-block;
+
+    字体大小 每个不一样 在不同浏览器渲染也不一，height不确定。但字体都是基线对齐的。
+
+
+
+css bug  : 1 height  给固定值  ----会出问题。 如 子脱离 父高度会减少
+
+​		 2  width:100%  加上Padding等，子宽度会 > 父    解决方式：子穿外套inner innner上加padding
+
+
+
+背景图片 自适应：background-size : cover;
+
+max-width : 940px ;  宽度大于940时自适应
+
+居中： margin: 0 auto  ; text-align:center;
+
+span  内联元素居中 用 padding .不用设置w/h .  最好再明确 line-height; 因为不同机器显示高度也会不一样。
+
+
+
+画三角形： w:0  border:10px solid transparent; 三方向透明 其中一个给颜色 ---等腰直角三角形. 
+
+​				border 某一边给w:0 则又是一个三角形。
+
+
+
+绝对定位：脱标  子绝父相。 top:100%
+
+csstricks shapes 查看css做出来的各种图行源代码
+
+width1 40% width2 60% ----则父元素被子元素4 6 分
+
+
+
+制作svg 字体图标：iconfont.com---购物车---symbol 生成链接 引入js----使用帮助symbol---复制粘贴
+
+svg设置样式： {w/h: xx; 颜色：fill:white  平齐：vertical-align:top}     
+
+用padding 挤高度 用text-align 居中 用line-height在明确 居中。

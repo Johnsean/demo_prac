@@ -9,7 +9,10 @@ a {
     text-decoration: none;
 }
 
-body {}
+body {
+
+    background: #EFEFEF;
+}
 
 /* conmmon */
 .clearfix::after {
@@ -79,8 +82,10 @@ body {}
 
 main {
     max-width: 930px;
-    border: 5px solid #321;
     margin: 0 auto;
+    margin-top: -343px;
+    margin-bottom: 35px;
+    background: #fff;
 }
 
 main .card {
@@ -164,4 +169,33 @@ main footer.media>a:hover {
     height: 25px;
     fill: white;
     vertical-align: top;
+}
+
+a.button {
+    display: inline-block;
+    padding: 24px 55px;
+    margin-bottom: 38px;
+    transition: box-shadow 0.3s;
+    border: 1px solid #B4B3B5;
+    border-radius: 5px;
+    font-weight: bold;
+    color: black;
+}
+
+a.button:hover {
+    box-shadow: -2px 6px 22px 2px rgba(0, 0, 0, 0.42);
+}
+
+section.skills {
+    margin-top: 38px;
+    text-align: center;
+}
+
+section.skills h2 {
+    margin-bottom: 25px;
+}
+
+section.skills div.photo span {
+    display: inline-block;
+    width: 50%;
 }

@@ -9,6 +9,10 @@ a {
     text-decoration: none;
 }
 
+ol {
+    list-style: none;
+}
+
 body {
 
     background: #EFEFEF;
@@ -147,7 +151,6 @@ main .card .intro .profile dl dd {
 
 main footer.media {
     text-align: center;
-
     background: #E8676B;
 }
 
@@ -186,16 +189,105 @@ a.button:hover {
     box-shadow: -2px 6px 22px 2px rgba(0, 0, 0, 0.42);
 }
 
+/* skills */
 section.skills {
-    margin-top: 38px;
+    font-size: 0;
+    width: 940px;
+    margin: 38px auto 0;
     text-align: center;
 }
 
 section.skills h2 {
+    font-size: 20px;
     margin-bottom: 25px;
 }
 
+section.skills div.photo {
+    padding: 40px 48px 0;
+    background: #fff;
+}
+
 section.skills div.photo span {
+    font-size: 16px;
     display: inline-block;
-    width: 50%;
+    vertical-align: top;
+    width: 47%;
+    height: 65px;
+    margin: 0 12px;
+    box-sizing: border-box;
+
+}
+
+section.skills div.photo span div.progress {
+    background: #FBE0E1;
+}
+
+section.skills div.photo span div.progress .pros {
+    background: #E8676B;
+    width: 80%;
+    height: 3px;
+}
+
+section.skills div.photo span:nth-child(2) div.pros {
+    width: 75%;
+}
+
+section.skills div.photo span:nth-child(3) div.pros {
+    width: 60%;
+}
+
+section.skills div.photo span:nth-child(5) div.pros {
+    width: 10%;
+}
+
+section.skills div.photo span:nth-child(6) div.pros {
+    width: 10%;
+}
+
+/* works */
+section.works {
+    margin: 70px auto 0;
+    width: 910px;
+    text-align: center;
+}
+
+section.works h2 {
+    margin-bottom: 25px;
+}
+
+section.works nav {
+    width: 204px;
+    margin: 0 auto;
+}
+
+section.works nav button {
+    margin-left: 45px;
+    background: transparent;
+    border: 0;
+    cursor: pointer;
+    outline: 0;
+}
+
+section.works nav button:first-child {
+    margin-left: 0;
+}
+
+.progress {
+    background: #FBE0E1;
+}
+
+.pros {
+    background: #E8676B;
+    width: 30%;
+    height: 3px;
+}
+
+.prosac1 {
+    margin-left: 69px;
+    width: 24%;
+}
+
+.prosac2 {
+    margin-left: 142px;
+    width: 39%;
 }

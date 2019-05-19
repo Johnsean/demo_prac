@@ -164,6 +164,77 @@ width1 40% width2 60% ----则父元素被子元素4 6 分
 
 制作svg 字体图标：iconfont.com---购物车---symbol 生成链接 引入js----使用帮助symbol---复制粘贴
 
-svg设置样式： {w/h: xx; 颜色：fill:white  平齐：vertical-align:top}     
+svg设置样式： {w/h: xx; 颜色：fill:white  平齐：vertical-align:top}     //行内元素顶部平齐
 
 用padding 挤高度 用text-align 居中 用line-height在明确 居中。
+
+
+
+头像：avatar
+
+## css续
+
+#### 一些概念
+
+空标签： 没儿子的/自闭标签
+
+类名 ：复用
+
+id名： 身份证 唯一
+
+伪类(nth-child(even)) 伪元素（before after 替代div 鼠标圈选不到伪元素）
+
+​	nth-child(1)/first-child
+
+  
+
+#### 一些实现：
+
+​		可以用来做太极图案 一个黑白半圆(渐变)组成的圆 ---内放两个黑白圆，黑白圆由空心的border宽度很大的圆组成。
+
+#### css3 工具：	
+
+​	渐变工具 搜索 css3 linear gradient generator
+
+​	阴影工具 搜索 css shadow generator
+
+​	动画效果：@keyframes spin{to :{} from:{}}  
+
+
+
+#### 一些属性
+
+过渡： transistion:box-shadow 1s;
+
+一行俩技能条 ：padding+box-sizing:border-box ; 即可实现断层
+
+margin-top  负值  让盒子上升，形成视觉上的定位？ 
+
+​	与相对定位比较 不占用空间。与绝对定位比较 不脱标
+
+点击下载 : a标签属性：download , href:url  target:_blank
+
+
+
+#### 简写：
+
+​	 text-align:center    ta:c
+
+​	d:ib   一定要加 vec-align:top;   bug 底部会多空隙
+
+
+
+### JS 状态机
+
+​	逻辑上分析 几种状态：  例子  左中右三种 同时符合 
+
+​	         接着写完该功能面子标签 后script标签内：  id0name.onclick=function(){ id2name.className="lei1 lei2"}.
+
+
+
+
+
+​	
+
+
+

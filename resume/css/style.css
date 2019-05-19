@@ -225,7 +225,7 @@ section.skills div.photo span div.progress {
 section.skills div.photo span div.progress .pros {
     background: #E8676B;
     width: 80%;
-    height: 3px;
+    height: 5px;
 }
 
 section.skills div.photo span:nth-child(2) div.pros {
@@ -246,8 +246,9 @@ section.skills div.photo span:nth-child(6) div.pros {
 
 /* works */
 section.works {
+    position: relative;
     margin: 70px auto 0;
-    width: 910px;
+    width: 940px;
     text-align: center;
 }
 
@@ -256,7 +257,7 @@ section.works h2 {
 }
 
 section.works nav {
-    width: 204px;
+    width: 290px;
     margin: 0 auto;
 }
 
@@ -266,6 +267,7 @@ section.works nav button {
     border: 0;
     cursor: pointer;
     outline: 0;
+    font-size: 20px;
 }
 
 section.works nav button:first-child {
@@ -274,20 +276,49 @@ section.works nav button:first-child {
 
 .progress {
     background: #FBE0E1;
+    border-radius: 5px;
 }
 
 .pros {
     background: #E8676B;
     width: 30%;
-    height: 3px;
+    height: 7px;
+    border-radius: 5px;
 }
 
 .prosac1 {
-    margin-left: 69px;
-    width: 24%;
+    margin-left: 88px;
+    width: 36%;
 }
 
 .prosac2 {
-    margin-left: 142px;
-    width: 39%;
+    margin-left: 202px;
+    width: 30%;
 }
+
+div.jobsL {
+    margin-top: 30px;
+    height: 570px;
+}
+
+div.jobsL div.big {
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 600px;
+    padding: 0 10px;
+}
+
+div.jobsL div.small {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    padding: 0 22px;
+
+}
+
+div.jobsL div.smallT {
+    margin-bottom: 10px;
+}
+
+div.jobsL div.smallB {}

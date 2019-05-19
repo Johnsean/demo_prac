@@ -131,21 +131,31 @@
         <h2>作品</h2>
         <nav>
             <div class="jobs">
-            <button class="jobs1">所有</button>
-            <button class="jobs1">框架</button>
-            <button class="jobs1">原生js</button>
+                <button class="jobs1" id="jobs1">所有</button>
+                <button class="jobs2" id="jobs2">框架</button>
+                <button class="jobs3" id="jobs3">原生js</button>
             </div>
-             <div class="progress">
-                 <div class="pros"></div>
-             </div>
-             <script>
-             progress
-             </script>
+            <div class="progress">
+                <div class="pros" id="bar"></div>
+            </div>
         </nav>
-        <div class="jobs">
-            <div class="big"></div>
-            <div class="small"></div>
-            <div class="small"></div>
+        <script>
+            jobs1.onclick = function () {
+                bar.className = 'pros'
+            }
+            jobs2.onclick = function () {
+                bar.className = 'pros prosac1'
+            }
+            jobs3.onclick = function () {
+                bar.className = 'pros prosac2'
+            }
+        </script>
+        <div class="jobsL">
+            <div class="big"><img src="images/job1.jpg" width="600px"></div>
+            <div class="small">
+                <div class="smallT"><img src="images/job2.jpg"></div>
+                <div class="smallB"><img src="images/job3.jpg"></div>
+            </div>
         </div>
     </section>
 </body>

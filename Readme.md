@@ -309,9 +309,34 @@ rm -rf
  &emsp;html是指定网页的文档类型。
  
  **协议的字符集** > **内容字符标语**
- --meta上的charset 传回来的数据格式看后端的
- SEO优化：
+ --meta上的charset 传回来的数据格式若前后端冲突还是看后端的。
  
+ SEO优化：meta name=keyword content="xxx"
+
+ 
+ a href='javascript:;'
+ 
+ a => get 请求
+
+ form => post请求
+
+>8 &emsp; css 
+
+ &emsp; &emsp;1. &emsp;float+ clearfix
+  
+  &emsp; &emsp;2. &emsp;高度由什么决定的： span==行高 div==内容文档流总合
+
+**resuem 点** ：1. hover时nav a 的border 离着远  
+    &emsp; &emsp; &emsp; &emsp;&emsp;2.iconfont & &emsp;三角形
+
+&emsp;&emsp; &emsp; &emsp; &emsp;3.工具的使用：xxx **generator** 如阴影 渐变
+ 
+ &emsp;driidle 追波 搜web ----google 搜webpage free psd
+  
+  &emsp; &emsp; &emsp; &emsp; &emsp;4.padding +border-box 、margin(IE有bug)
+
+   &emsp; &emsp; &emsp; &emsp; &emsp;5. a/link href   &emsp; &emsp;srcipt/img/iframe src
+
 
 
 

@@ -1,0 +1,35 @@
+/* all tags */
+* {
+    padding: 0;
+    margin: 0;
+}
+
+main {
+    text-align: center;
+}
+
+#baba {
+    margin-top: 50px;
+    display: inline-block;
+}
+
+/* row keyboard */
+#baba>div:nth-child(2) {
+    margin-left: 2em;
+}
+
+#baba>div:nth-child(3) {
+    margin-left: 5em;
+}
+
+/* kbd */
+kbd {
+    display: inline-block;
+    padding: 3em;
+    line-height: 1em;
+    border: 1px solid red;
+    /* 调整字体转大写 */
+    text-transform: uppercase;
+    background: blueviolet;
+
+}

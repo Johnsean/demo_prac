@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>key</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+  <header></header>
+  <main>
+    <div id="baba"></div>
+  </main>
+  <footer></footer>
+  <script>
+    // hash 存放三行的键盘 row 行
+    var keys = {
+      '0': ['q', 'w', 'e', 'r', 't', 'y', 'u', 'i', 'o', 'p'],
+      '1': ['a', 's', 'd', 'f', 'g', 'h', 'j', 'k', 'l'],
+      '2': ['z', 'x', 'c', 'v', 'b', 'n', 'm'],
+      'length': 3
+    };
+    var hash = {
+      'q': 'qq.com',
+      'b': 'baidu.com'
+    };
+    var row = 0;
+
+    // 创建3个div 3行==键盘格式
+    while (row < keys['length']) {
+      var divXXX = document.createElement("div");
+      baba.appendChild(divXXX);
+      console.log(1);
+      //   每创建一行div的同时 添加对应个数的kbd及对应值
+      var count = 0;
+      while (count < keys[row].length) {
+        // 创建Kbd存储每个按键的容器，同时插入值
+        var kbdXXX = document.createElement("kbd");
+        divXXX.appendChild(kbdXXX);
+        kbdXXX.textContent = keys[row][count];
+        // 应该在之前简化为一维数组  inde1=keys[row];   
+        count++;
+      }
+      row = row + 1;
+    }
+
+    // 监听按键事件：
+    document.onkeypress = function (asd) {
+      console.log(asd['key']);
+      // 获得按键值
+      var key = asd['key'];
+      // 从hash中通过键取出对应的值：网站
+      var website = hash[value];
+      if (website) {
+        // 跳转
+        location.href = 'http://' + website;
+        // 新窗口打开 
+        // window.open('http://' + website,'_blank');
+      }
+    }
+  </script>
+</body>
+
+</html>

@@ -2,7 +2,7 @@
 
 
 
-### demo-1 ： 
+### [demo-1](//https://johnsean.github.io/demo_prac/js/demo-1/) ： 
 
 &emsp;&emsp;&emsp;&emsp;**按键跳转网页/搜索操作  | 增加自定义按钮跳转**
 

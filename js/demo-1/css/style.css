@@ -11,6 +11,8 @@ main {
 #baba {
     margin-top: 50px;
     display: inline-block;
+    background: url(http://img5.dwstatic.com/lol/1601/317240712104/1453285656991.jpg);
+    background-size: contain;
 }
 
 /* row keyboard */
@@ -24,12 +26,28 @@ main {
 
 /* kbd */
 kbd {
+    position: relative;
     display: inline-block;
     padding: 3em;
     line-height: 1em;
-    border: 1px solid red;
     /* 调整字体转大写 */
     text-transform: uppercase;
-    background: blueviolet;
+    background: transparent;
+    box-shadow: -5px 6px 3px 0px rgba(242, 228, 242, 0.64);
+    color: yellowgreen;
+    font-weight: bold;
+}
 
+kbd>button {
+    display: none;
+    position: absolute;
+    padding: 0.3em;
+    top: 0;
+    right: 0;
+    background: orange;
+    border: 0;
+}
+
+kbd:hover>button {
+    display: block;
 }

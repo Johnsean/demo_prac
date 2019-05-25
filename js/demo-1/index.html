@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width">
-  <title>key</title>
+  <title>key-website</title>
   <link rel="stylesheet" href="css/style.css">
 </head>
 
@@ -26,6 +26,13 @@
       'q': 'qq.com',
       'b': 'baidu.com'
     };
+    // 存储在浏览器 取出覆盖hash  使’修改’生效
+    var hashlocalStorage = JSON.parse(localStorage.getItem('zzz') || 'null');
+    if (hashlocalStorage) {
+      // 将json转的js对象 地址给hash　这样每次的值是该对象的地址＝》对象数据更改它就同步
+      hash = hashlocalStorage;
+    }
+
     var row = 0;
 
     // 创建3个div 3行==键盘格式
@@ -33,6 +40,7 @@
       var divXXX = document.createElement("div");
       baba.appendChild(divXXX);
       console.log(1);
+
       //   每创建一行div的同时 添加对应个数的kbd及对应值
       var count = 0;
       while (count < keys[row].length) {
@@ -41,6 +49,26 @@
         divXXX.appendChild(kbdXXX);
         kbdXXX.textContent = keys[row][count];
         // 应该在之前简化为一维数组  inde1=keys[row];   
+
+        // 在kbd 内插入btn 编辑按钮
+        var btnXXX = document.createElement("button");
+        kbdXXX.appendChild(btnXXX);
+        btnXXX.textContent = 'Edit';
+
+        // 增加自定义功能 点击btn修改hash
+        // 给btn 添加Id 区分点击的是哪个同时作为hash的键去取值
+        btnXXX.id = keys[row][count];
+        // 监听点击事件：
+        btnXXX.onclick = function (mmx) {
+          var key = mmx['target']['id']; //q w e r t
+          //  弹出框接受输入文字修改Hash  
+          var value = prompt('给我一个网址'); //qq.com
+          hash[key] = value;
+
+          // 防止刷新 数据消失 hash存在浏览器
+          // 第一个 数据表名 任意。 第二个 传入该对象的json字符串数据结构。
+          localStorage.setItem('zzz', JSON.stringify(hash));
+        }
         count++;
       }
       row = row + 1;
@@ -48,16 +76,16 @@
 
     // 监听按键事件：
     document.onkeypress = function (asd) {
-      console.log(asd['key']);
+      // console.log(asd['key']);
       // 获得按键值
       var key = asd['key'];
       // 从hash中通过键取出对应的值：网站
-      var website = hash[value];
+      var website = hash[key];
       if (website) {
         // 跳转
-        location.href = 'http://' + website;
+        // location.href = 'http://' + website;
         // 新窗口打开 
-        // window.open('http://' + website,'_blank');
+        window.open('http://' + website, '_blank');
       }
     }
   </script>

@@ -1,0 +1,90 @@
+/* all tags */
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background: gray url(../wall-min.png) no-repeat center center;
+    background-size: cover;
+}
+
+main {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+}
+
+#baba {
+    margin-top: -180px;
+    display: inline-block;
+    background: rgb(255, 255, 255, 0.2);
+    border-radius: 10px;
+}
+
+/* row keyboard */
+#baba>div:nth-child(2) {
+    margin-left: 32px;
+}
+
+#baba>div:nth-child(3) {
+    margin-left: -24px;
+}
+
+div.row {
+    margin-top: 10px;
+}
+
+/* kbd */
+.key {
+    position: relative;
+    width: 50px;
+    height: 40px;
+    margin: 3px;
+    background: linear-gradient(to bottom, #292929 0%, #111111 100%);
+    box-shadow: 0 0 0 1px #1A1B1C, 0 0 0 2PX #1F2020, 0 3PX 0 2PX #080808;
+    border: 1px solid #373737;
+    border-radius: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: Helvetica;
+    font-size: 16px;
+    line-height: 1em;
+    /* 调整字体转大写 */
+    text-transform: uppercase;
+    color: #C5C5C5;
+    font-weight: bold;
+}
+
+.key>.text {
+    position: absolute;
+    top: 2px;
+    left: 4px;
+}
+
+.key>button {
+    display: none;
+    position: absolute;
+    padding: 1px;
+    color: white;
+    top: 0;
+    right: 0;
+    border: 0;
+    background: transparent;
+    border-radius: 6px;
+}
+
+.key:hover>button {
+    display: block;
+}
+
+.key img {
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    bottom: 2px;
+    left: 4px;
+}

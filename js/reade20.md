@@ -1,4 +1,4 @@
-# Lessons.20-21
+# Lessons.20-22
 
 ##  一、Js 历史
 
@@ -194,6 +194,8 @@
 
 ​		3. `'` + Any    *[老司机 万能]*
 
+
+
 #### 	**Any ---> boolean**
 
 ​		1. `Boolean(Any)`     5个 **falsy** 值：0 NaN  null undefined  **''**   [所有对象都是 true]
@@ -210,15 +212,17 @@
 
 ​	*基本类型*  都存在 **栈**中 ，*复杂类型*  **存Heap地址**入**栈**中 (string类型堆栈都可以这种说法不算错)
 
-	> 运行一段代码 ： 1  变量提升      2 运行 代码    代码放代码段 ,栈按一定顺序存放 堆存放随机
-	>
-	> 代码区				   栈                   堆
-	>
-	> var a = 1                    a|   1             |                             |
-	>
-	> var b = 2		    b|   2             |    {...}  [100]       |
-	>
-	> var o = { ... }	     o |ADDR 100 |                            |
+```javascript
+ //运行一段代码 ： 1  变量提升    2 运行 代码    代码放代码段 ,栈按一定顺序存放 堆存放随机
+
+	代码区				   栈              堆
+
+ var a = 1          a|   1      |                       |
+
+ var b = 2		    b|   2      |    {...}  [100]       |
+
+ var o = { ... }   o | ADDR 100 |                       |
+```
 
 ​	*若对象存 栈 中 修改对象数据会很慢 因为要算 给多少栈内存 偏移多少个地址再存下一个数据* 	
 
@@ -335,20 +339,284 @@ b.name = 'b'
 a.name ？ // 'b'   浅拷贝:b变 影响 a的值
 ```
 
+**深拷贝 ：b 变 不影响 a  的值**
+
+​	**即对 Heap 内存进行完全的拷贝**
+
+``` javascript
+var a = {name: 'a'}
+var b = deepClone(a) // deepClone 还不知道怎么实现
+b.name = 'b'
+a.name === 'a' // true
+```
+
+
+
 ----------------------------lesson21 end-------------------------
 
 ​	
 
-​	
+## 四、js 里的对象
+
+> 预览：全局对象 window    全局函数   公用的属性藏在哪     toString 是哪来的 -------原型链
 
 
 
+#### 一、全局对象window
+
+​	全局对象标准规定：  **global** (浏览器中全局对象：window)
+
+``` javascript
+浏览器 生成 global 栈存入地址20  地址20指向堆内存中window对象
+```
+
+**window 的属性** 分为 
+
+1. **公共[ECMA规定必有的]**   
+
+> 如 parseInt ... Number() String() Boolean() Object() ...
+
+2. **私有的(各个浏览器自己的API等)两类**
+
+> alert prompt confirm console  history[*BOM*]
+>
+> document(文档) --**-DOM规范** 由*W3C*制定
+
+```javascript
+var n = Number()  
+n? // 0
+var s = String()
+s? // ''
+var b = Boolean()
+b? // false
+var o = Object()
+o? // ｛...｝
+ -----
+  //异步函数 计时器: 会有自己的编号
+    window.setTimeout(function(){console.log(1)},3000)
+	window.history.back()  //浏览器页面会后退操作
+```
 
 
 
+#### 二、简单类型变为对象
+
+​	**结论**：JS 中直接使用 **变量 n** ，不需要包装为简单类型对象。因为js会自动利用**临时对象**来处理。
+
+1. 简单类型**转对象** 与**简单类型**本身有什么**区别**？   :包装为对象有便捷的API可以使用
+
+    	**1**  VS  **new  Number(1)**
+
+   **Number() 的用法** ： ①：转为数字 Number('1')  // 1
+
+   ​				    ② : 声明一个number 对象
+
+   ``` javascript
+   var n1 = 1   // n1 存 1
+   var n2 = new Number(1) // n2 存 地址20 =》{valueOf():1 ...}
+   
+   // n1 n2 区别就是 n2 是个数值型对象，有便捷的API可以使用
+   n2.toString() //'1'
+   n2.valueOf()  // 1
+   n2.toFixed(2) // '1.00'
+   n2.toExponential() // '1e+0'
+   ```
+
+   **历史回溯：**
+
+   ``` javascript
+   //boss : js 长的像 Java ===》var n = new Number(1) 这种没人用
+   
+   //BE : var n =1 ==> JS  但是缺点: n.toString() 不行
+   	妙计： 利用临时转换：
+    原理：  var temp = new Number(n)
+          	temp.toString() //运行结果给n.toString() 后抹杀temp
+   
+   ===》 var n = 1
+   		n.xxx = 2  //2 执行时创建temp返回 执行完一条语句就抹杀掉temp
+   		n.xxx ? // undefined  所以这里再次运行创建temp temp没有xxx属性
+   ```
+
+   **string boolean 同理**
+
+   
+
+   **string** :
+
+   ``` javascript
+   var s = 'hello'
+   s[0] //'h'  key 按顺序0-x的 hash似
+   s.anchor() //<a name='undefined'>hello</a>
+   s.big() //<big>hello</big>
+   
+   s.charAt(1) //'e' 第2个字符
+   s.charCodeAt(0)  //104
+   'a'.charCodeAt(0) //97  十进制的 a
+   'a'.charCodeAt(0).toString(16) //'61' 16进制的 a
+   (100).toString(16) //'64'  将100转为16进制的字符串 6*16+4*16^0
+   ```
+
+   ``` javascript
+   // 字符串的一些方法
+   ' user  '.trim()  //1、去掉首尾多余的空格
+   
+   var s1 = 'hello'
+   var s2 = 'world'
+   //2、链接 s1 + s2
+    s1.concat(s2) //'helloworld'
+   	s1? s2? //'hello' 'world'  
+   //3、切片 取字符 [0,5) -->包前不包后
+    s1.slice(0,5) //'hello'
+    s1.slice(0,6) //'hello'
+   //4、 替换字符
+    s1.replace('e','o') //'hollo'
+     s1  ? //'hello'
+   ```
 
 
 
+​	**boolean**:
+
+```	java
+var b = new Boolean(true)
+    b.toString() //'true'
+    b.valueOf() //true
+    
+//   踩坑： 
+   var f = false 
+   var f2 = new Boolean(false)
+   if(f){console.log(1)}
+   if(f2){console.log(2)}
+ 	// 结果： 2   f2是｛｝所以f2会打印
+```
+
+​	**复杂类型：**
+
+```	javascript
+var o1 = {}          //o1 ->{}
+var o2 = new Object() // o2 -->{}
+o1 === o2 //false 
+	它们俩完全没区别，但是不相等。因为存的地址不一样 引用的堆位置不一样
+```
 
 
-## 四、对象
+
+#### 三、公用的属性藏在哪
+
+​	由**重复的属性** 占据内存 --》**复用** 重复的属性*[将其打包放入名为共有属性/原型的对象中]*
+
+其他对象直接*[存 包含共有属性的对象 地址即可]***引用**   避免重复属性导致内存浪费
+
+``` javascript
+var n = new Number(1)   //addr 10
+var s = new String('hi')  //addr 20
+var b = new Boolean(true)  //addr 30
+var p = new Object()	 //addr 40
+//创建这些对象时，它们都含有 toString,ValueOf 属性。大量重复占据Heap空间
+
+//js不这样做：将这些共有属性集合为 x, 让n/s/b/p相应的key 指向 x 的地址
+//js 这样做：在创建对象时，创建了隐藏属性__proto__,其指向 包含共有的属性对象
+  //js 两步走： 1. hash 声明好  2. 绑定下各自的共用属性（原型）
+```
+
+**toString 是哪来的 -------原型链**
+
+``` javascript
+var o1 = {}
+var o2 = new object()
+o1 === o2 /false
+o1.toString === o2.toString  //true  o1 o2 的 tostring 是同一个
+```
+
+​	 **o1.toString() 执行轨迹：**
+
+``` javascript
+o1.toString() //o1 若不是对象 则转为临时对象 
+//o1 若是对象，去找toString().找不到 则去__proto__找。
+//__proto__它引用共用属性，在共用属性里面去 层层往上一层，一直找到根节点Object 若还是没有则确定为没有该方法。
+```
+
+**分歧**：当一个**不普通的对象**[如简单类型包装]：
+
+``` java
+var n = new Number() //n的__proto__ 中包含 toFix/toEx../toString(16)【能接收参数】
+var o = new Object() //n数字型对象 的共有属性与 o 普通对象的并不一致
+  // string boolean 等类似 它们都有各自的共有属性    
+```
+
+​	普通对象没有自己特有的API 
+
+
+
+​	**简单型对象的方法执行轨迹：**
+
+``` javascript
+例如：
+var n = new Number() //n.__proto__指向 Number.prototype[①]
+//Number.prototype.__proto__指向 Object.prototype[②] ①②这就是原型链
+//Object.prototype.__proto__指向 null
+
+var o1={}  //普通对象
+o1.__proto__ === Object.prototype //true
+
+var n1 = new Number(1) // 数字型对象  字符布尔型对象同理
+o1.__proto__ === Number.prototype   //true
+o1.__proto__.__proto__ === Object.prototype  //true
+```
+
+
+
+#### 四、原型与GC
+
+ 由于 生成对象 绑定*[Stack]* **-->** 共有属性*[Heap]*保证了**引用关系**。
+
+​	当**无代码**时 内存中 共有属性若`无引用关系` 则会被**GC**
+
+​	无代码内存情况：`window [Stack] `  `Number/Object...[Heap]`
+
+​	window 存 包含Number等属性集合的地址 **Number.prototype** 指向的 是 number 的共用属性.
+
+它只是指向。保持不会被gc .保证了无代码状态下共有属性的存在。
+
+``` javascript
+var s = new String(1)
+String.prototype 是 String 的公用属性的引用 //String.prototype 指向的 是 String 的共用属性.
+s.__proto__ 是 String 的公用属性的引用 // s.__proto__ 指向的 是 String 的共用属性.
+//区别：第一个 防止 原型GC  第二个是要用的
+```
+
+---------------------
+
+*烧脑环节：*
+
+#### 重点公式：对象.__proto__ === 函数.prototype
+
+``` javascript
+首先理解：
+var __1__ = new __2__  //1 类型应为 对象 'object'  2 类型:函数对象
+
+然后就知道 __p__ 和 .prototype
+
+var 对象 = new 函数()
+公式： 对象.__proto__ === 函数.prototype  //它们俩指向同一个对象
+//__p 和 p 区别: 就是 _p 是对象的属性, p 是函数的属性
+
+typeof Function //'function'
+Function.__proto__ === Function.prototype  //true
+Function.__proto__ === Object.prototype   //false
+
+由公式可推导：
+函数.__proto__ === Function.prototype 
+Function.__proto__ === Function.prototype //Function的_p和p 指向同一个地址
+Function.prototype.__proto__=== Object.prototype //Function共有属性的_p指向Obj的p
+
+
+Object.__proto__ === Function.prototype，因为 Function 是 Object 的构造函数。
+
+//总结： Function = { p:a30, _p:a30}  => a30:Function.p
+	//a30:{ _p:a40，...} => a40:obj.p  a40:{ _p =null}
+	// obj{p:a40,_p:a30}
+```
+
+-------------------------------lesson22 end
+

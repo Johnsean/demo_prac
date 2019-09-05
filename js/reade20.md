@@ -40,7 +40,7 @@
 
 ## 二、数据类型
 
-  有 7 中数据类型 ： 6 种基本数据类型 :number (数字) string(字符串) boolean( 布尔) 
+  有 7 中数据类型 ： 6 种基本数据类型 :number (数字64位) string(字符串16位) boolean( 布尔) 
 
 ​	[symbol](https://zhuanlan.zhihu.com/p/22652486) (符号 ES6 )  null undefined +1 种复杂类型  object (对象 包括 array 与 function)		
 
@@ -144,11 +144,15 @@
 
 ​	4. 删除key   `delete person['name']`  `person.name //undefined`  `'name' in person //false`
 
-> 拓展 ： 对象里面放自己 然后调用 
+> 拓展 ： 循环引用 
 >
-> var person = {name:'frank',... , self : person }  
+> var person = {name:'frank'  }   
 >
-> person.self.self.self.name   // 'frank'
+> ​	person.self = person;	 //循环引用自身 无限次...
+>
+> ​	person.self.self.self.name   // 'frank' 
+>
+> - -   var a={self : a }  //这种首先是 声明a ->1. a 为undefined ->2. a = {self:a}  //self:undefined
 
 ---
 
@@ -160,8 +164,191 @@
 
 ​		用在判断语句 ： `if (typeof v === "undefined"){...}`
 
-
+----------------------------lesson20 end-------------------------
 
 ## 三、内存图
+
+>  **预览**： *类型转换	各类型的API	内存图	深复制是什么鬼*
+
+###  7种类型互相转换
+
+#### 	**Any ---> number**:
+
+​		1. `Number('1')`
+
+​		2. `parseInt (‘1’,10)`
+
+​		3. `parseFloat(‘1.23v’)` // 1.23
+
+​		4. `‘1’ - 0`  *[老司机]*
+
+​		5. `+‘-1’`   *[老司机 取正]*
+
+​		
+
+#### 	**Any ---> string** :
+
+​		1. ` Any.toString() 方法`   [null,undefined 两种没有这个API,会报错]
+
+​		2. `window.String(Any) 方法 `
+
+​		3. `'` + Any    *[老司机 万能]*
+
+#### 	**Any ---> boolean**
+
+​		1. `Boolean(Any)`     5个 **falsy** 值：0 NaN  null undefined  **''**   [所有对象都是 true]
+
+​		2. `!!Any`  [老司机]
+
+
+
+### 1  VS Obj    （1 转 对象）
+
+​		------>内存图  1 和 Obj 在计算机内存中存储方式
+
+​	*内存分为 代码区 | 数据区  。  数据区 分为   **Stack** 栈内存| **Heap** 堆内存 。堆能存的数据很大*
+
+​	*基本类型*  都存在 **栈**中 ，*复杂类型*  **存Heap地址**入**栈**中 (string类型堆栈都可以这种说法不算错)
+
+	> 运行一段代码 ： 1  变量提升      2 运行 代码    代码放代码段 ,栈按一定顺序存放 堆存放随机
+	>
+	> 代码区				   栈                   堆
+	>
+	> var a = 1                    a|   1             |                             |
+	>
+	> var b = 2		    b|   2             |    {...}  [100]       |
+	>
+	> var o = { ... }	     o |ADDR 100 |                            |
+
+​	*若对象存 栈 中 修改对象数据会很慢 因为要算 给多少栈内存 偏移多少个地址再存下一个数据* 	
+
+​		object 存入 地址100  ， object 是**对象**的**引用**
+
+#### **关于引用**：
+
+​	**4 个内存问题**  ：【画图解决】
+
+```javascript
+var a = 1    // a 存 1
+var b = a 	 // b 存 1
+b = 2		 // b 存 2
+a ?			 // a 是 1
+```
+
+``` javascript
+var a = {name : 'a'}  // a 存 该对象的地址20
+var b = a			  // b 存 a的值 地址20
+b = {name : 'b'}	  // b 存 对象2的地址21
+a.name ?			  // 所以a.name ='a'
+```
+
+``` javascript
+var a = {name : 'a'}  // a 存 该对象的地址20
+var b = a  			  // b 存 a的值 地址20
+b.name = 'b'		  // 找地址20的name -》name='b'
+a.name ?			  // 所以a.name ='b'
+```
+
+``` javascript
+var a = {name : 'a'}  // a 存 该对象的地址20
+var b = a			  // b 存 a的值 地址20
+b = null			  // b 的值 清空  浏览器把b=null 记下来 不管b的值都清空掉
+a ?					  // a 存的 地址20
+```
+
+
+
+**循环引用**：
+
+``` javascript 
+ var a= { }   // a 存 ｛｝的地址50
+ a.self = a   // 将 地址50 给 a.self【即 地址50对象的属性 self】 => a={self:{self:{...}}}
+ a.self.self  // {self:{...}} 无限循环引用下去
+// 错误使用写法：↓↓↓
+var a = {self : a}  // ->首先 声明变量 a 然后 地址66给 a
+// a = {self:undefined}  声明的a 值为 undefined
+```
+
+**引用类型**：	
+
+``` javascript
+//例子：  等号左边 地址 计算前就确定了。 浏览器左->右看 再 右->左 计算赋值
+var a = {n:1};     // a 存地址20  -->{n:1}
+var b = a;		   // b 存地址20  -->{n:1}
+a.x = a = {n:2};   // a 的地址均为20 -->{n:1} 然后
+				//  a存地址 21-->{n:2}  地址20的a.x 存21 --{n:1,x:{n:2}}
+	alert(a.x); //	undefined  a地址为21-->{n:2} 即 a.x=undefined
+	alert(b.x); // [object Object]  b的地址为20-->{n:1,x:{n:2}} 即[o O]
+```
+
+
+
+#### **GC 垃圾回收**
+
+​	**若一个对象没有被 引用 则是垃圾 等待系统回收**
+
+``` javascript
+var a = {name : 'a'}  //a 存地址20
+var b = {name :'b'}	  //b 存地址30
+a = b   //a 存地址30  则 地址30--》{name : 'a'} 未被引用
+// 地址30 就是垃圾 等待回收
+
+例子2：
+var fn = function(){}  //fn 存地址 20
+document.body.onclick = fn  //document存body地址->body->onclick ->地址20
+fn = null  // fn 清空 
+	// 地址20 的对象 不是辣鸡 因为还被document 引用
+当把该页面关掉   则是辣鸡 因为 document 不存在了 
+```
+
+> **注意** ：
+>
+> **IE 6左右 BUG** : 页面关闭时 body->onclick ->function ***未标记****为垃圾【算法问题】回收* [内存泄漏]，除非关I闭整个IE
+>
+> 解决办法：**关闭页面前 在该方法中  要写上所有的相关事件置为null**
+>
+> ``` javascript
+> window.onunload = function() {
+>     document.body.onclick = null ...
+> }
+> ```
+
+
+
+#### 深拷贝 VS 浅拷贝
+
+``` javascript
+var a = 1 
+var b = a 
+b =2   
+a ？//a =1 深拷贝：b变 不影响 a的值 
+```
+
+ 基本类型 的赋值 就是 深拷贝。所以这里研究的是 复杂类型
+
+**浅拷贝** ：b 变 影响 a  的值
+
+``` javascript
+var a = {name : 'a'}
+var b = a 
+b.name = 'b'
+a.name ？ // 'b'   浅拷贝:b变 影响 a的值
+```
+
+----------------------------lesson21 end-------------------------
+
+​	
+
+​	
+
+
+
+
+
+
+
+
+
+
 
 ## 四、对象

@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/main.css">
+    <link rel="stylesheet" href="css/loading.css">
     <script src="//at.alicdn.com/t/font_1194047_zdnh8mek81.js"></script>
     <title>Resume</title>
 
@@ -21,22 +22,41 @@
 </head>
 
 <body>
+    <!-- 载入loading -->
+    <div id="siteWelcome" class="site-welcome active">
+        <div class="loadingW"></div>
+    </div>
     <!-- 顶部导航条 -->
-    <div class="topNavBar ">
+    <div id="topNavBar" class="topNavBar">
         <div class="inner clearfix">
             <!-- logo -->
-            <a href="#" alt="logo"><span>RS</span>card</a>
+            <a class="logo" href="#" alt="logo" style="float: left;"><span class="rs">RS</span> <span
+                    class="card">card</span></a>
             <!-- nav -->
-            <nav>
-                <a href=""> ABOUT</a>
-                <a href=""> SKILLS</a>
-                <a href=""> PORTFOLIO</a>
-                <a href=""> EXPERIENCE</a>
-                <a href=""> PRICING</a>
-                <a href=""> BLOG</a>
-                <a href=""> CALENDAR</a>
-                <a href=""> CONTACT</a>
-                <a href=""> OTHER</a>
+            <nav class="menu" style="float:right">
+                <ul class="clearfix">
+                    <li><a href="#card">关于</a></li>
+                    <li><a href="#skills"> 技能</a></li>
+                    <li><a href="#works">作品</a></li>
+                    <li class="menuTigger"><a href="javascript:;">经验</a>
+                        <ul class="submenu">
+                            <li><a href="javascript:;">经验1</a></li>
+                            <li><a href="javascript:;">经验2</a></li>
+                            <li><a href="javascript:;">经验3</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="javascript:;">PRICING</a></li>
+                    <li class="menuTigger"><a href="#bolg">博客</a>
+                        <ul class="submenu">
+                            <li><a href="javascript:;">bolg经验经验</a></li>
+                            <li><a href="javascript:;">bolg2</a></li>
+                            <li><a href="javascript:;">bolg3</a></li>
+                        </ul>
+                    </li>
+                    <li><a href="javascript:;">CALENDAR</a></li>
+                    <li><a href="javascript:;">CONTACT</a> </li>
+                    <li><a href="javascript:;"> OTHER</a></li>
+                </ul>
             </nav>
         </div>
     </div>
@@ -47,7 +67,7 @@
     </div>
 
     <!-- 个人信息 -->
-    <main>
+    <main id="card">
         <div class="card clearfix">
             <div class="picture">
                 <img src="images/avatar.jpg" style="width:296px;height:343px" alt="头像">
@@ -71,7 +91,7 @@
                 </div>
             </div>
         </div>
-        <footer class="media">
+        <footer id="bolg" class="media">
             <a href="#"><svg class="icon" aria-hidden="true">
                     <use xlink:href="#icon-CSDN"></use>
                 </svg></a>
@@ -92,7 +112,7 @@
         <p style="font-size: 18px;font-family: kai">爱好钓鱼，摸鱼，沉鱼。开天一壶酒。提剑下山去 </p>
     </section>
 
-    <section class="skills">
+    <section id="skills" class="skills">
         <h2>专业技能</h2>
         <div class="photo">
             <span>html
@@ -127,7 +147,7 @@
             </span>
         </div>
     </section>
-    <section class="works">
+    <section id="works" class="works">
         <h2>作品</h2>
         <nav>
             <div class="jobs">
@@ -158,6 +178,42 @@
             </div>
         </div>
     </section>
+    <script>
+        // 加载完dom 延时清除loading 
+        setTimeout(function () {
+            siteWelcome.classList.remove('active');
+        }, 1000)
+
+        window.onscroll = function () {
+            if (window.scrollY > 0) {
+                topNavBar.classList.add('sticky');
+            } else {
+                topNavBar.classList.remove('sticky');
+            }
+        }
+
+        //监听含有二级菜单的li鼠标 移进 移出 进行切换类名操作
+        let tags = document.querySelectorAll('nav>ul>li.menuTigger');
+        for (let len = 0; len < tags.length; len++) {
+            tags[len].onmouseenter = function (x) {
+                x.currentTarget.classList.add('active')
+            }
+            tags[len].onmouseleave = function (x) {
+                x.currentTarget.classList.remove('active')
+            }
+        }
+
+        //锚点功能：监听点击a 事件 获取href数据 滚动到相应id 位置
+        let aTags = document.querySelectorAll('nav.menu>ul>li>a')
+        for (let i = 0; i < aTags.length; i++) {
+            aTags[i].onclick = function (x) {
+                x.preventDefault();
+                let href = x.currentTarget.getAttribute('href');
+                let anchorA = document.querySelector(href);
+                window.scrollTo(0, anchorA.offsetTop - 62);
+            }
+        }
+    </script>
 </body>
 
 </html>

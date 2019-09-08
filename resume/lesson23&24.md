@@ -46,7 +46,7 @@ animation-delay:1s;
 
 //过渡 & 变形：要有个起始量为基础 + 类名切换/:hover激活/事件激活过渡生效
 {
-    transform: rotate(180deg);
+    transform: rotate(180deg); // :translate(-100%,0);
     // transition: width 2s, height 2s, transform 2s;
     transition:all .5s
 }
@@ -76,11 +76,17 @@ animation-delay:1s;
 
 4. 盒子 四边**边框的宽度**【可以实现文字上下或者左右的偏移】`border-width`
 
-   5 . **阴影效果**`box-shadow:0 0 5px rgb(0,0,0,0.5)`
+   
+
+5.  **阴影效果**`box-shadow:0 0 5px rgb(0,0,0,0.5)`
+
+   
 
 6. `nav>ul>li>a:hover::after` a hover时　展示它的伪类效果
 
 ​      `nav>ul>li:hover a::after` li hover 时 它的**所有**子元素a 展示它的伪类效果
+
+
 
 7. **不换行** `white-space: nowrap;`  [会撑宽该标签]
 
@@ -144,6 +150,13 @@ document.querySelectorAll('nav>ul>li.menuTigger'); //找所有含选择器的元
 document.querySelector('li.menuTigger'); //找第一个含选择器的元素 -->只返回第一个元素 
 ```
 
+#### **找含有某属性的元素**：
+
+``` javascript
+document.querySelector("[href='#"+closestTag.id+"']")
+// '[href='#tagname.id"]'
+```
+
 
 
 ### 4. 事件 ：`e.target`&`e.currentTarget`  
@@ -155,7 +168,9 @@ document.querySelector('li.menuTigger'); //找第一个含选择器的元素 -->
 
 
 
-### 5. node.tagName&  `node.nextSibling` 
+### 5. 找元素/父、兄、子孙
+
+#### 1. node.tagName&  `node.nextSibling` 
 
 一个弟弟节点 `node.nextSibling`  不一定是元素节点[bug]
 
@@ -172,6 +187,20 @@ while(brother.nodeType === 3){
     brother = brother.nextSibling
 }
 ```
+
+
+
+#### 2. 父/子孙 用node。
+
+ele.`parentElement`  ele.`parentNode`
+
+> parentElement 和 parentNode一样,
+>
+> 但parentNode是W3C标准的parentElement 只在IE中可用.
+
+通过父亲找儿子： `navTag.parentNode.children` [集合是动态更新的]
+
+通过父亲找父亲的兄弟： `navTag.parentNode.parentNode.children`
 
 
 
@@ -199,5 +228,76 @@ xxxx 局部变量代码 element xxx
 debugger  //需要断点的地方
 console.log(element)
 -----------在控制台即可打印关于局部变量的信息
+```
+
+
+
+---
+
+## lesson 24 ：
+
+预览:
+
+> 1. 定时器的灵活使用 每秒移动距离 【引出👉】2. 缓动函数使动画效果不僵硬   3. 框架的使用方式 。
+> 2. 动画实现方式： 1. JS 实现   2. animation   3.transform + transition
+
+
+
+#### 1. Math.abs()  绝对值
+
+#### 2. 元素.样式.属性
+
+``` javascript
+div1.style.position="relative" 
+div1.style.left = '20px'  // 须带px
+```
+
+#### 3. 定时器  ---》 动画的原理 帧
+
+`setTimeout()`   ` setInterval() ` **清除定时器：** `clearInterval(id)`
+
+``` javascript
+div1.style.positon = 'relative'
+div.style.left= 0
+var n = 0
+var i =425
+var id = setInter(()=>{
+    if(n===i){
+        window.clearInterval(id)
+        return //防止n=n+1继续下去bug
+    }
+    n = n + 1
+    div1.style.left = n + 'px'
+   },40)
+```
+
+#### 4. 缓动函数 / 缓动框架Tweenjs
+
+s = v * t   [**s** = *|div.offset - window.scrollY|*  **v[API**] =》Tweenjs 几秒内完成动画**t** =*s* * t' [t' =>每像素走多少秒]=> ]
+
+
+
+#### 5. 滚动时离哪个元素近
+
+>  滚动高亮导航/ 元素出场动画 /  均与 滚动时离哪个元素近有关
+
+ 通过标记 [如加属性] 需要监控的元素 ，实时监听滚动事件==》 获得滚动 y 坐标
+
+判断监控的哪个元素离 y坐标最近 ，则添加 相应效果
+
+**选择排序法：** 选第一个元素为最近的 与之后每个元素相比，距离最近则为最近的元素
+
+``` javascript
+let divTags = document.querySelectorAll('[data-ele]');    // 所有目标监控元素
+let closestTag = document.querySelectorAll('[data-ele]')[0]; 	//取第一个元素为最近
+let minVal = 0;  //标记每次最小的标签key
+or (let i =1; i < divTags.length; i++) {    //遍历从第二个元素开始比较
+  if((Math.abs(divTags[i].offsetTop-window.scrollY))  //比较元素.y - scrollY 的绝对值
+      <(Math.abs(closestTag.offsetTop-window.scrollY))){
+             minVal = i;
+               closestTag =divTags[i]; //若不是最近 则把它赋给最近这个变量
+                        }
+                    }
+//就得到了最近 元素 closestTag
 ```
 

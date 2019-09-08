@@ -23,9 +23,9 @@
 
 <body>
     <!-- 载入loading -->
-    <div id="siteWelcome" class="site-welcome active">
+    <!-- <div id="siteWelcome" class="site-welcome active">
         <div class="loadingW"></div>
-    </div>
+    </div> -->
     <!-- 顶部导航条 -->
     <div id="topNavBar" class="topNavBar">
         <div class="inner clearfix">
@@ -67,7 +67,7 @@
     </div>
 
     <!-- 个人信息 -->
-    <main id="card">
+    <main id="card" data-ele>
         <div class="card clearfix">
             <div class="picture">
                 <img src="images/avatar.jpg" style="width:296px;height:343px" alt="头像">
@@ -112,7 +112,7 @@
         <p style="font-size: 18px;font-family: kai">爱好钓鱼，摸鱼，沉鱼。开天一壶酒。提剑下山去 </p>
     </section>
 
-    <section id="skills" class="skills">
+    <section id="skills" data-ele class="skills">
         <h2>专业技能</h2>
         <div class="photo">
             <span>html
@@ -147,7 +147,7 @@
             </span>
         </div>
     </section>
-    <section id="works" class="works">
+    <section id="works" data-ele class="works">
         <h2>作品</h2>
         <nav>
             <div class="jobs">
@@ -178,18 +178,49 @@
             </div>
         </div>
     </section>
+
+
+    <script src="tween/dist/tween.umd.js"></script>
     <script>
         // 加载完dom 延时清除loading 
-        setTimeout(function () {
-            siteWelcome.classList.remove('active');
-        }, 1000)
+        // setTimeout(function () {
+        //     siteWelcome.classList.remove('active');
+        // }, 1000)
 
+        let specialTags = document.querySelectorAll('[data-ele]');
+        for (let i = 0; i < specialTags.length; i++) {
+            specialTags[i].classList.add('offset'); //从下往上的效果 先全部放在下沉位置
+            //进度条效果同类名 利用选择器的不同一石二鸟
+        }
+
+        findClosest();
         window.onscroll = function () {
             if (window.scrollY > 0) {
                 topNavBar.classList.add('sticky');
             } else {
                 topNavBar.classList.remove('sticky');
             }
+            findClosest();
+        }
+
+        function findClosest() {
+            // 用属性标记要监控的元素 滚动 滚动谁近
+            let specialTags = document.querySelectorAll('[data-ele]');
+            let minIndex = 0; // 最近的元素标签序号
+            for (let i = 1; i < specialTags.length; i++) {
+                if ((Math.abs(specialTags[i].offsetTop - window.scrollY)) <
+                    (Math.abs(specialTags[minIndex].offsetTop - window.scrollY))) {
+                    minIndex = i;
+                }
+            }
+            specialTags[minIndex].classList.remove('offset'); // navBar 激活效果 通过id找href="#id" let
+
+            li = document.querySelector("[href='#" + specialTags[minIndex].id + "' ]").parentNode;
+            let brothersAndMe = li.parentNode.children;
+            for (let i = 0; i < brothersAndMe.length; i++) {
+                brothersAndMe[i].classList.remove('highlight');
+            }
+            li.classList.add('highlight');
         }
 
         //监听含有二级菜单的li鼠标 移进 移出 进行切换类名操作
@@ -203,6 +234,13 @@
             }
         }
 
+        // Setup the animation loop.
+        function animate(time) {
+            requestAnimationFrame(animate);
+            TWEEN.update(time);
+        }
+        requestAnimationFrame(animate);
+
         //锚点功能：监听点击a 事件 获取href数据 滚动到相应id 位置
         let aTags = document.querySelectorAll('nav.menu>ul>li>a')
         for (let i = 0; i < aTags.length; i++) {
@@ -210,7 +248,28 @@
                 x.preventDefault();
                 let href = x.currentTarget.getAttribute('href');
                 let anchorA = document.querySelector(href);
-                window.scrollTo(0, anchorA.offsetTop - 62);
+
+                let timeF = 10; // 每1个像素所需时间
+                let currentP = window.scrollY; //当前y坐标
+                let targetP = anchorA.offsetTop - 80; //目标y 坐标
+                let distanceS = targetP - currentP; //距离S 
+                let duration = Math.abs(distanceS * timeF) //动画完成时间
+                if (duration > 1000) {
+                    duration = 1000
+                }
+
+                var coords = {
+                    y: currentP
+                }; // Start at (0, 0)
+                var tween = new TWEEN.Tween(coords) // Create a new tween that modifies 'coords'.
+                    .to({
+                        y: targetP
+                    }, duration) // Move to (300, 200) in 1 second.
+                    .easing(TWEEN.Easing.Quadratic.InOut) // Use an easing function to make the animation smooth.
+                    .onUpdate(function () {
+                        window.scrollTo(0, coords.y);
+                    })
+                    .start(); // Start the tween immediately.
             }
         }
     </script>

@@ -45,6 +45,14 @@ body {
     display: flex;
 }
 
+[data-ele] {
+    transform: translateY(0);
+    transition: all .5s;
+}
+
+[data-ele].offset {
+    transform: translateY(100px);
+}
 
 /* header  */
 .topNavBar {
@@ -107,7 +115,8 @@ body {
 }
 
 .topNavBar nav>ul>li>a:hover::after,
-.topNavBar nav>ul>li.active>a::after {
+.topNavBar nav>ul>li.active>a::after,
+.topNavBar nav>ul>li.highlight>a::after {
     position: absolute;
     top: 100%;
     left: 0;
@@ -311,11 +320,17 @@ section.skills div.photo span {
     height: 65px;
     margin: 0 12px;
     box-sizing: border-box;
-
+    overflow: hidden;
 }
 
 section.skills div.photo span div.progress {
     background: #FBE0E1;
+    transform: translateX(0);
+    transition: all 1s;
+}
+
+section.skills.offset div.photo span div.progress {
+    transform: translateX(-100%);
 }
 
 section.skills div.photo span div.progress .pros {

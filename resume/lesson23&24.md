@@ -271,15 +271,52 @@ var id = setInter(()=>{
    },40)
 ```
 
+滚动到a+动画x：
+
+``` javascript
+// 简易版         S = v * t
+var currentTop = window.scrollY  //当前所在y 轴位置
+var targetTop = aTag.offsetTop //目标元素位置
+var T = 1000  //周期
+var n = 25   // 一共滚多少次  1秒25帧
+var t = T / n  //每次滚 所花多少秒
+var S = targetTop - currentTop  //所滚动的总路程 S 
+var s = S / n     //每次滚动的单位路程 s
+var i = 0		//计数 当前滚动次数
+var id = setInterval(function(){   //动画
+    if( i ===n ){       //25次清除计数器
+        window.clearInterval(id)   
+        return
+    }
+    i += 1
+    window.scrollTo(0, currentTop + s * i)  //每次滚动的位置Y
+},t)  //每隔多少秒滚一次
+
+```
+
+
+
 #### 4. 缓动函数 / 缓动框架Tweenjs
 
 s = v * t   [**s** = *|div.offset - window.scrollY|*  **v[API**] =》Tweenjs 几秒内完成动画**t** =*s* * t' [t' =>每像素走多少秒]=> ]
+
+``` javascript
+var coords = { y: currentP }; // Start at (0, 0) 滚动Y坐标起始点
+var tween = new TWEEN.Tween(coords) // Create a new tween that modifies 'coords'.
+.to({y: targetP}, duration) // Move to (0, 200) in 1 second.到达目标位置&所花时间
+.easing(TWEEN.Easing.Quadratic.InOut) // Use an 缓动API to make the animation 
+.onUpdate(function () { // 完成动画的时间内每次的 Y 坐标:cords.y. 
+                  window.scrollTo(0, coords.y);  //进行滚动
+                    })
+.start(); // Start the tween immediately.
+            }
+```
 
 
 
 #### 5. 滚动时离哪个元素近
 
->  滚动高亮导航/ 元素出场动画 /  均与 滚动时离哪个元素近有关
+>  滚动高亮导航/ 元素出场动画 /  均与 滚动时屏幕顶部离哪个元素近有关
 
  通过标记 [如加属性] 需要监控的元素 ，实时监听滚动事件==》 获得滚动 y 坐标
 

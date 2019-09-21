@@ -154,7 +154,7 @@ obj={0:1,1:2,length:2}
 
 1. 有 *0,1,2,3,4,5...n,length* 这些 **key** 的对象
 
-2. 原型链中没有 **Array.prototype** 这样的对象就是伪数组
+2. 整个原型链中没有 **Array.prototype** 这样的对象就是伪数组
 
 > 目前知道的伪数组有 ： 1.    *arguments* 对象  
 >

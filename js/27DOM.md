@@ -52,7 +52,7 @@
 
 
 
-`childNodes`(包括回车这个文本节点)    `children` 子标签
+`childNodes`(包括回车这个文本节点) //返回的是**伪数组**   `children` 子标签
 
 `nextSibling` & ` previousSibling`可能获得到的是文本节点
 

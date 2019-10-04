@@ -24,23 +24,21 @@ var server = http.createServer(function (request, response) {
     response.setHeader('Content-Type', 'text/css; charset=utf-8')
     response.write('body{background-color: #ddd;}h1{color: red;}')
     response.end()
-  }else if (path == '/script.html') {
-    response.setHeader('Content-Type', 'text/javascript; charset=utf-8')
-    response.write('alert("这是JS执行的")')
-    response.end()
-  }else if (path == '/index.css') {
-    response.setHeader('Content-Type', 'text/html; charset=utf-8')
-    response.write('<!DOCTYPE>\n<html>' +
-      '<head><link rel="stylesheet" href="/style.js">' +
-      '</head><body>' +
-      '<h1>你好</h1>' +
-      '<script src="/script.html"></script>' +
-      '</body></html>')
-    response.end()
   }else if (path === '/') { // 第二种写法 读取文件写入输出
     var string = fs.readFileSync('./index.html', 'utf8')
+    var amount = fs.readFileSync('./db', 'utf8')
+    string = string.replace('&&&amount&&&', amount)
     response.setHeader('Content-Type', 'text/html; charset=utf-8')
     response.end(string)
+  }else if (path === '/pay' && method.toUpperCase() === 'POST') {
+    var amount = fs.readFileSync('./db', 'utf8')
+    var newAmount = amount - 1
+    if (Math.random() > 0.5) {
+      fs.writeFileSync('./db', newAmount)
+      response.write('success')}else {
+      response.write('fail')
+    }
+    response.end()
   }else {
     response.statusCode = 404
     response.setHeader('Content-Type', 'text/html;charset=utf-8')

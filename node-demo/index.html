@@ -6,15 +6,11 @@
         <title>首页</title>
     </head>
     <body>
-        <h1>您的账户余额是<span id="amount">100</span></h1>
-        <button id="button">付款一块钱</button>
+        <h1>您的账户余额是<span id="amount">&&&amount&&&</span></h1>
+        <form action="/pay" method="post">
+            <input type="submit" value="付款" />
+        </form>
     </body>
     <script>
-        button.addEventListener('click', (e)=>{
-            let n = amount.innerText
-            let number = parseInt(n,10)
-            let newNumber = number-1
-            amount.innerText = newNumber
-        })
     </script>
 </html>

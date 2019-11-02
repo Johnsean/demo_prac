@@ -226,7 +226,10 @@ $.post('/sign_in',hash).then((response)=>{
 //路由 
 if(path ==='/'){
     let strings = fs.readFileSync('./index.html', 'utf-8')
-    let cookies = request.headers.cookie.split('; ')
+    let cookies = ''
+    if(request.headers.cookie){
+        cookies = request.headers.cookie.split('; ')
+    }
     let hash = {}
     for(let i=0;i<cookies.length;i++){ 
         let parts = cookies[i].split('=') 

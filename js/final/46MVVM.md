@@ -314,7 +314,21 @@ C 暂不改
 
 ## 三、用 Vue 改写
 
-只用该 view ---> vue    还可以将 c 加入 vue
+mv[-更智能]c[-可合并到v]---自动化---> mvvm
+
+
+
+Vue 定位
+
+> m -  ajax (fetch update)
+>
+> v -  dom (el)
+>
+> c -  数据结构/算法/面向对象等知识
+
+---
+
+改写只用改 view ---> vue    还可以将 c 加入 vue
 
 vue中：
 
@@ -363,7 +377,7 @@ this.mode.fetch(1).then(()=>{
 
 
 
-2. ### view  上 绑定事件  （controller 就不需要了）
+### Vue  上 绑定事件  （controller 就不需要了）
 
 ``` javascript
 let view = new Vue({
@@ -458,7 +472,7 @@ let view = new Vue({
 ### Demo2 :轮播
 
 ``` css
-.slides{
+.sliders{
     width: 300px;
     background: red;
     height: 100px;

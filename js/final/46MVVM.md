@@ -445,7 +445,7 @@ data : { n:1,book:{name:'1',number:2，id:''}}
 
 `<div id="app"> </div>`
 
-### demo1：toggle
+### demo1：[toggle](http://js.jirengu.com/tetub/6/edit?html,css,output)
 
 ``` javascript
 let view = new Vue({
@@ -469,7 +469,7 @@ let view = new Vue({
 
 
 
-### Demo2 :轮播
+### Demo2 :[轮播](http://js.jirengu.com/yujug/5/edit?html,output)
 
 ``` css
 .sliders{
@@ -489,13 +489,15 @@ let view = new Vue({
 let view = new Vue({
     el: '#app',
     data: {
-        tranformValue: ''
+        tranformValue: '',
+        x:['/x','/y','/z'] //添加图片地址
     },
     template:`
     <div>
         <div class="window">
             <div class="sliders" 
             :style="{transform:tranformValue}">
+				<img v-for="url in x" :src="url" height="100">
 			</div>
         </div>
         <button v-on:click="go(0)">1</button>
@@ -512,7 +514,7 @@ let view = new Vue({
 
 
 
-### Demo3: 选中显示内容
+### Demo3: [选中显示内容](http://js.jirengu.com/daloc/1/edit?html,output)
 
 ``` javascript
 let view = new Vue({
@@ -523,9 +525,9 @@ let view = new Vue({
     template:`
 <div>
     <ol> 
-        <li @class="{active:selected === 0}" @click="selected = 0">1<li>
-        <li @class="{active:selected === 1}" @click="selected = 1">2<li>
-        <li @class="{active:selected === 2}" @click="selected = 2">3<li>
+        <li :class="{active:selected === 0}" @click="selected = 0">1<li>
+        <li :class="{active:selected === 1}" @click="selected = 1">2<li>
+        <li :class="{active:selected === 2}" @click="selected = 2">3<li>
     </ol>
     <ol> 
         <li v-show="selected === 0}">1<li>
@@ -558,7 +560,7 @@ let view = new Vue({
     <ol> 
     	<li v-for="tab in tabs"  
             @click="selected =tab.name"
-            @class="{active:tab.name === selected}"
+            :class="{active:tab.name === selected}"
 		>{{tab.name}}<li>
     </ol>
     <ol> 
